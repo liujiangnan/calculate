@@ -1,0 +1,14 @@
+{
+  "title": "lifekit",
+  "logo": "images/logo_zhbr.png",
+  "port": "8800",
+  "filepath": "/Users/zhy/WebstormProjects/calculate/ftpfile",
+  "backup": "/Users/zhy/WebstormProjects/calculate/temp",
+  "db": {
+    "dbname": "calculate",
+    "server": "localhost",
+    "port": "3306",
+    "uid": "root",
+    "pwd": "123456"
+  }
+}

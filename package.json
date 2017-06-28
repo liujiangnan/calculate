@@ -1,0 +1,47 @@
+{
+  "name": "koa-lifekit",
+  "bin": {
+    "lifekit": "./bin/lifekit"
+  },
+  "version": "1.0.0",
+  "dependencies": {
+    "debug": "^2.6.3",
+    "ejs": "^2.5.6",
+    "iconv-lite": "^0.4.18",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-cors": "0.0.16",
+    "koa-generic-session": "^1.11.5",
+    "koa-json": "^2.0.2",
+    "koa-jwt": "^3.2.1",
+    "koa-logger": "^2.0.1",
+    "koa-onerror": "^1.2.1",
+    "koa-router": "^7.0.1",
+    "koa-send": "^4.1.0",
+    "koa-static": "^3.0.0",
+    "koa-views": "^5.2.1",
+    "lifekit-mysqlhelper": "^1.0.1",
+    "node-schedule": "^1.2.3",
+    "node-uuid": "^1.4.8",
+    "path": "^0.12.7",
+    "socket.io": "^1.7.3",
+    "socketio-jwt": "^4.5.0"
+  },
+  "devDependencies": {},
+  "directories": {
+    "bin": "./bin"
+  },
+  "description": "物联网应用模块的最小化平台支撑",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "lifekit start"
+  },
+  "keywords": [
+    "lifekit",
+    "koa-lifekit"
+  ],
+  "author": "liujiangnan",
+  "license": "ISC"
+}

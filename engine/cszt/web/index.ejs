@@ -1,0 +1,274 @@
+<link href="cszt/web/static/timer/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />  
+
+<script type="text/javascript" src="cszt/web/static/echarts.min.js"></script>   
+<script src="cszt/web/static/timer/js/bootstrap-datetimepicker.min.js"></script> 
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">预测系统</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a id="yxjk" href="/yxjk">运行监控</a></li>
+        <li><a id="zbpj" href="/zbpj">指标评价</a></li>
+        <li  class="active"><a>传输状态</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" id="user_nc"><%=NAME %></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">操作 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#" onclick="logout()">注销</a></li>
+            <li><a href="#">修改信息</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav> 
+<div style="padding-left:5px;padding-right:5px;">
+    <table class="table" style="font-size:12px;text-align:center;border:solid 1px #eee;">
+        <tr style="background-color:#eee;">
+            <td>项</td>
+            <td>短期</td>
+            <td>超短期</td>
+            <td>测风塔</td>
+            <td>NWP</td>
+            <td>风机</td> 
+            <td>检修</td> 
+        </tr>
+        <tr>
+            <td style="background-color:#eee;" >数据接收</td>
+            <td><span :class="status.dq.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.dq.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.dq.down==0?'正常':'异常'}}</td>
+            <td><span :class="status.cdq.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cdq.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cdq.down==0?'正常':'异常'}}</td>
+            <td><span :class="status.cft.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cft.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cft.down==0?'正常':'异常'}}</td>
+            <td><span :class="status.nwp.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.nwp.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.nwp.down==0?'正常':'异常'}}</td>
+            <td><span :class="status.fj.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.fj.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.fj.down==0?'正常':'异常'}}</td>
+            <td><span :class="status.jx.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.jx.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.jx.down==0?'正常':'异常'}}</td>
+        </tr>
+        <tr>
+            <td style="background-color:#eee;" >数据上送</td>
+            <td><span :class="status.dq.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.dq.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.dq.up==0?'正常':'异常'}}</td>
+            <td><span :class="status.cdq.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cdq.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cdq.up==0?'正常':'异常'}}</td>
+            <td><span :class="status.cft.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cft.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cft.up==0?'正常':'异常'}}</td>
+            <td><span :class="status.nwp.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.nwp.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.nwp.up==0?'正常':'异常'}}</td>
+            <td><span :class="status.fj.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.fj.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.fj.up==0?'正常':'异常'}}</td>
+            <td><span :class="status.jx.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.jx.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.jx.up==0?'正常':'异常'}}</td>
+        </tr>
+    </table>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <span class="btn btn-default col-sm-1" onclick="before()">前一天</span>
+            <div class="col-sm-3">
+                <div class="input-group date" >
+                    <input type='text' id="datetimepicker" data-date-format="yyyy-mm-dd" class="form-control"/>  
+                    <span class="input-group-addon">  
+                        <span class="glyphicon glyphicon-calendar"></span>  
+                    </span>
+                </div>
+            </div>
+            <span class="btn btn-default col-sm-1" onclick="after()">后一天</span>
+            <div class="col-sm-1"></div>
+            <span class="btn btn-info col-sm-2" onclick="search()">查询</span>
+            <div class="col-sm-2"></div>
+        </div>
+        <div class="row" style="margin-top:20px;">
+            <div id="chart" style="height:300px;"></div>
+        </div>
+
+        <div class="row" style="margin-top:20px;">
+            <div>
+                <h4 id="wjlb_title">数据文件传输记录</h4>
+            </div>
+            <table class="table" style="font-size:12px;">
+                <tr>
+                    <td></td>
+                    <td>文件时间</td>
+                    <td>文件名称</td>
+                    <td>收到文件时间</td>
+                    <td>文件调度时间</td>
+                    <td>传输结果</td>
+                </tr>
+                <tr v-for="(file,index) in fileList">
+                    <td>{{index+1}}</td>
+                    <td>{{file.filetime.split("_")[1]}}</td>
+                    <td>{{file.filename}}</td>
+                    <td>{{file.get_file_time}}</td>
+                    <td>{{file.dispatch_file_time}}</td>
+                    <td>{{file.desc_}}</td>
+                </tr>  
+            </table>
+        </div>
+    </div>
+ </div> 
+<script>
+    var vue = net.datachange("divAll");
+
+    var _dq=1;
+    var _cdq=96;
+    var _cft=288;
+    var _fj=288;
+    var _nwp=1;
+    var _jx=1;
+
+    var myChart;
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '数据文件'
+        },
+        tooltip: {
+            formatter: function (params, ticket, callback) {
+                var success = 0;
+                var fail = 0;
+                if(params.name==="短期"){
+                    success = chartsDatas.DQ.success;
+                    fail = chartsDatas.DQ.fail;
+                }else if(params.name==="超短期"){
+                    success = chartsDatas.CDQ.success;
+                    fail = chartsDatas.CDQ.fail;
+                }else if(params.name==="测风塔"){
+                    success = chartsDatas.CFT.success;
+                    fail = chartsDatas.CFT.fail;
+                }else if(params.name==="风机"){
+                    success = chartsDatas.FJ.success;
+                    fail = chartsDatas.FJ.fail;
+                }else if(params.name==="NWP"){
+                    success = chartsDatas.NWP.success;
+                    fail = chartsDatas.NWP.fail;
+                }else if(params.name==="检修"){
+                    success = chartsDatas.JX.success;
+                    fail = chartsDatas.JX.fail;
+                }
+                var str = params.name+"文件<br/>成功："+success+"<br/>失败："+fail; 
+                return str;
+            }
+        },
+        legend: {
+            data:['成功次数',"失败次数"]
+        },
+        xAxis: {
+            data: ["短期","超短期","测风塔","风机","NWP","检修"]
+        },
+        yAxis: {
+            show:false
+        },
+        series: [{ // For shadow
+            type: 'bar',
+            itemStyle: {
+                normal: {color: 'rgba(0,0,0,0.05)'}
+            },
+            barGap:'-100%',
+            barCategoryGap:'40%',
+            data: [1,1,1,1,1,1],
+            animation: false
+        },{
+            name: '成功次数',
+            type: 'bar',
+            stack: '总量',
+            data: []
+        },{
+            name: '失败次数',
+            type: 'bar',
+            stack: '总量',
+            data: []
+        }]
+    }; 
+
+    function before(){
+        var date = $('#datetimepicker').val().replace(/-/g,"/");
+        var time = new Date(new Date(date).getTime() - 24*60*60*1000);
+        $('#datetimepicker').val(time.pattern("yyyy-MM-dd"));
+    }
+
+    function after(){
+        var date = $('#datetimepicker').val().replace(/-/g,"/");
+        var time = new Date(new Date(date).getTime() + 24*60*60*1000);
+        $('#datetimepicker').val(time.pattern("yyyy-MM-dd"));
+    }
+
+    function round(a,total){
+       return Math.round(((a-0)/total)*100)/100;
+    }
+
+
+    var chartsDatas = null;
+    function search(){ 
+        net.call("getEchartsData",$('#datetimepicker').val(),function(res){ 
+            chartsDatas = res;
+            option.series[1].data  = [
+                round(res.DQ.success,_dq), 
+                round(res.CDQ.success,_cdq), 
+                round(res.CFT.success,_cft), 
+                round(res.FJ.success,_fj),
+                round(res.NWP.success,_nwp),
+                round(res.JX.success,_jx)
+                ];
+            option.series[2].data  = [
+                round(res.DQ.fail,_dq), 
+                round(res.CDQ.fail,_cdq), 
+                round(res.CFT.fail,_cft), 
+                round(res.FJ.fail,_fj), 
+                round(res.NWP.fail,_nwp), 
+                round(res.JX.fail,_jx)
+                ];
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }); 
+    } 
+
+    function logout(){
+        net.getView("logout","",function(){
+            document.location.href="/";
+        });
+    }
+
+    $(function(){ 
+ 
+        $('#datetimepicker').val(new Date().pattern("yyyy-MM-dd"));
+        $('#datetimepicker').datetimepicker({
+            autoclose:true, 
+            minView:2,
+            startView:2
+        });  
+ 
+        myChart = echarts.init(document.getElementById('chart')); 
+        myChart.setOption(option);
+        
+        myChart.on('click', function (params) {
+            //"短期","超短期","测风塔","风机","NWP","检修"
+            var file_type = "";
+            if(params.name == "短期"){
+                file_type = "DQ";
+            }else if(params.name == "超短期"){
+                file_type = "CDQ";
+            }else if(params.name == "测风塔"){
+                file_type = "CFT";
+            }else if(params.name == "风机"){
+                file_type = "FJ";
+            }else if(params.name == "NWP"){
+                file_type = "NWP";
+            }else if(params.name == "检修"){
+                file_type = "JX";
+            }
+            $("#wjlb_title").html(params.name+"数据文件传输记录");
+            net.call("tablechange",{date:$('#datetimepicker').val(),file_type:file_type});
+        });
+        search();
+    }); 
+</script>   
+
+<style>
+ 
+</style>
