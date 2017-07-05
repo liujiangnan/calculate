@@ -27,7 +27,7 @@ function start() {
     app.use(convert(session({
         secret: 'iot',
         name: 'iot',   //这里的name值得是cookie的name，默认cookie的name是：connect.sid
-        cookie: { maxAge: 800000 },  //设置maxAge是80000ms，即800s后session和相应的cookie失效过期
+        cookie: { maxAge: 1000*60*60*24*30 },  //设置maxAge是30天，即30天后session和相应的cookie失效过期
         resave: false,
         saveUninitialized: true
     })));

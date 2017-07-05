@@ -48,7 +48,6 @@ emitter.on("save_rn_plan",function(file){
                 sql = sql + ";" + sqlparser.insertColumnForJson("RN_PLAN",insertObj);
             }
         }
-        console.dir(sql.substr(1));
         conn.execNonQuery(sql.substr(1),function(err,res){
             if(err){
                 console.error(err);
@@ -162,20 +161,20 @@ emitter.on("file_listener",function(file_type,trans_type,status_){
     if(file_type=="PJ"){
         return;
     }
-    if(file_type!="RQ"&&file_type!="RN"&&file_type!="TXDD"&&file_type!="TXHT"){
-        let sockets = netclient.getSockets("cszt").values(); 
-        for(let i=0;i<sockets.length;i++){
-            let net = sockets[i].net; 
-            net.data.status[file_type.toLowerCase()][trans_type] = status_;
-        }
-    } 
+    // if(file_type!="RQ"&&file_type!="RN"&&file_type!="TXDD"&&file_type!="TXHT"){
+    //     let sockets = netclient.getSockets("cszt").values(); 
+    //     for(let i=0;i<sockets.length;i++){
+    //         let net = sockets[i].net; 
+    //         net.data.status[file_type.toLowerCase()][trans_type] = status_;
+    //     }
+    // } 
     sockets = netclient.getSockets("yxjk").values(); 
     for(let i=0;i<sockets.length;i++){
         let net = sockets[i].net; 
         if(file_type=="RQ"||file_type=="RN"||file_type=="TXDD"||file_type=="TXHT"){
             net.data.status[file_type.toLowerCase()] = status_;
         }else{
-            net.data.status[file_type.toLowerCase()][trans_type] = status_;
+            //net.data.status[file_type.toLowerCase()][trans_type] = status_;
         } 
     }
 }); 
@@ -275,12 +274,12 @@ emitter.on("save_file_log",function(file){
             
 
             //前端推送文件传输信息
-            emitter.emit(
-                "file_listener",
-                file_name_arr[3].split(".")[0],
-                trans_type==="R"?"down":"up",
-                rowInfoArr[3].trim()
-            );
+            // emitter.emit(
+            //     "file_listener",
+            //     file_name_arr[3].split(".")[0],
+            //     trans_type==="R"?"down":"up",
+            //     rowInfoArr[3].trim()
+            // );
 
         }
         //sql = sqlparser.insertColumnForJson("PJ",insertObj);

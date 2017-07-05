@@ -23,16 +23,7 @@
         <li><a id="zbpj" href="/zbpj">指标评价</a></li>
         <li  class="active"><a>传输状态</a></li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" id="user_nc"><%=NAME %></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">操作 <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#" onclick="logout()">注销</a></li>
-            <li><a href="#">修改信息</a></li>
-          </ul>
-        </li>
-      </ul>
+       
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav> 
@@ -49,21 +40,21 @@
         </tr>
         <tr>
             <td style="background-color:#eee;" >数据接收</td>
-            <td><span :class="status.dq.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.dq.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.dq.down==0?'正常':'异常'}}</td>
-            <td><span :class="status.cdq.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cdq.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cdq.down==0?'正常':'异常'}}</td>
-            <td><span :class="status.cft.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cft.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cft.down==0?'正常':'异常'}}</td>
-            <td><span :class="status.nwp.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.nwp.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.nwp.down==0?'正常':'异常'}}</td>
-            <td><span :class="status.fj.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.fj.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.fj.down==0?'正常':'异常'}}</td>
-            <td><span :class="status.jx.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.jx.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.jx.down==0?'正常':'异常'}}</td>
+            <td :style="status.dq.down==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.dq.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.dq.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.dq.down==0?'正常':'异常'}}</td>
+            <td :style="status.cdq.down==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.cdq.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cdq.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cdq.down==0?'正常':'异常'}}</td>
+            <td :style="status.cft.down==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.cft.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cft.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cft.down==0?'正常':'异常'}}</td>
+            <td :style="status.nwp.down==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.nwp.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.nwp.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.nwp.down==0?'正常':'异常'}}</td>
+            <td :style="status.fj.down==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.fj.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.fj.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.fj.down==0?'正常':'异常'}}</td>
+            <td :style="status.jx.down==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.jx.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.jx.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.jx.down==0?'正常':'异常'}}</td>
         </tr>
         <tr>
             <td style="background-color:#eee;" >数据上送</td>
-            <td><span :class="status.dq.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.dq.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.dq.up==0?'正常':'异常'}}</td>
-            <td><span :class="status.cdq.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cdq.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cdq.up==0?'正常':'异常'}}</td>
-            <td><span :class="status.cft.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cft.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cft.up==0?'正常':'异常'}}</td>
-            <td><span :class="status.nwp.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.nwp.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.nwp.up==0?'正常':'异常'}}</td>
-            <td><span :class="status.fj.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.fj.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.fj.up==0?'正常':'异常'}}</td>
-            <td><span :class="status.jx.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.jx.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.jx.up==0?'正常':'异常'}}</td>
+            <td :style="status.dq.up==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.dq.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.dq.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.dq.up==0?'正常':'异常'}}</td>
+            <td :style="status.cdq.up==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.cdq.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cdq.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cdq.up==0?'正常':'异常'}}</td>
+            <td :style="status.cft.up==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.cft.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cft.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cft.up==0?'正常':'异常'}}</td>
+            <td :style="status.nwp.up==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.nwp.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.nwp.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.nwp.up==0?'正常':'异常'}}</td>
+            <td :style="status.fj.up==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.fj.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.fj.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.fj.up==0?'正常':'异常'}}</td>
+            <td :style="status.jx.up==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.jx.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.jx.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.jx.up==0?'正常':'异常'}}</td>
         </tr>
     </table>
     <div class="container-fluid">
@@ -102,8 +93,8 @@
                 </tr>
                 <tr v-for="(file,index) in fileList">
                     <td>{{index+1}}</td>
-                    <td>{{file.filetime.split("_")[1]}}</td>
-                    <td>{{file.filename}}</td>
+                    <td>{{file.filetime}}</td>
+                    <td :style="file.filename?'':'background-color:#c9302c;color:#ffffff;'">{{file.filename}}</td>
                     <td>{{file.get_file_time}}</td>
                     <td>{{file.dispatch_file_time}}</td>
                     <td>{{file.desc_}}</td>
@@ -266,6 +257,13 @@
             net.call("tablechange",{date:$('#datetimepicker').val(),file_type:file_type});
         });
         search();
+
+        net.call("getFileStatus");
+
+        setInterval(function(){
+            net.call("getFileStatus");
+        },5*60*1000);
+
     }); 
 </script>   
 

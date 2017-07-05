@@ -28,7 +28,7 @@ function bindEvent(){
     });
 
     $("#registerUser").bind('click',function(){ 
-        net.getView("toRegister","engine/login/web/register/index.ejs",function(res){
+        net.getView("getEjs","engine/login/web/register/index.ejs",function(res){
             $("#divAll").html(res);
         });
     });

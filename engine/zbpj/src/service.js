@@ -53,11 +53,13 @@ function service(net){
     }
 
     this.init = function(ctx,parms){
-        if(ctx.session.user){
-            return ctx.render("engine/zbpj/web/index.ejs", ctx.session.user);
-        }else{
-            return ctx.redirect('/login');
-        }
+        // if(ctx.session.user){
+        //     return ctx.render("engine/zbpj/web/index.ejs", ctx.session.user);
+        // }else{
+        //     return ctx.redirect('/login');
+        // }
+
+        return ctx.render("engine/zbpj/web/index.ejs", {});
     }
 
     this.logout = function(ctx){

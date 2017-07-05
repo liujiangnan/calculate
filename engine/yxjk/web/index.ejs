@@ -1,81 +1,76 @@
+<link href="/yxjk/web/static/timer/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 
-<link href="/yxjk/web/static/timer/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />  
-
-<script type="text/javascript" src="/yxjk/web/static/echarts.min.js"></script>   
-<script src="/yxjk/web/static/timer/js/bootstrap-datetimepicker.min.js"></script> 
+<script type="text/javascript" src="/yxjk/web/static/echarts.min.js"></script>
+<script src="/yxjk/web/static/timer/js/bootstrap-datetimepicker.min.js"></script>
 <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">预测系统</a>
-    </div>
+            <a class="navbar-brand" href="#">预测系统</a>
+        </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a id="yxjk">运行监控</a></li>
-        <li><a id="zbpj" href="/zbpj">指标评价</a></li>
-        <li><a id="cszt" href="/cszt">传输状态</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" id="user_nc"><%=NAME %></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">操作 <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#" onclick="logout()">注销</a></li>
-            <li><a href="/login/updateUser">修改信息</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav> 
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a id="yxjk">运行监控</a></li>
+                <li><a id="zbpj" href="/zbpj">指标评价</a></li>
+                <li><a id="cszt" href="/cszt">传输状态</a></li>
+            </ul> 
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
 <div style="padding-left:5px;padding-right:5px;">
-    <table class="table" style="font-size:12px;text-align:center;border:solid 1px #eee;" >
-        <tr style="background-color:#eee;" >
+    <table class="table" style="font-size:12px;text-align:center;border:solid 1px #eee;">
+        <tr style="background-color:#eee;">
             <td>项</td>
             <td>短期</td>
             <td>超短期</td>
             <td>测风塔</td>
             <td>NWP</td>
-            <td>风机</td> 
-            <td>检修</td> 
-            <td style="border-left:solid 4px #ccc;">项</td> 
-            <td>计划下发</td>  
-            <td style="border-left:solid 4px #ccc;">项</td> 
-            <td>通讯</td> 
+            <td>风机</td>
+            <td>检修</td>
+            <td style="border-left:solid 4px #ccc;">项</td>
+            <td>计划下发</td>
+            <td style="border-left:solid 4px #ccc;">项</td>
+            <td>通讯</td>
         </tr>
         <tr>
-            <td style="background-color:#eee;" >数据接收</td>
-            <td><span :class="status.dq.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.dq.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.dq.down==0?'正常':'异常'}}</td>
-            <td><span :class="status.cdq.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cdq.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cdq.down==0?'正常':'异常'}}</td>
-            <td><span :class="status.cft.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cft.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cft.down==0?'正常':'异常'}}</td>
-            <td><span :class="status.nwp.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.nwp.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.nwp.down==0?'正常':'异常'}}</td>
-            <td><span :class="status.fj.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.fj.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.fj.down==0?'正常':'异常'}}</td>
-            <td><span :class="status.jx.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.jx.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.jx.down==0?'正常':'异常'}}</td>
+            <td style="background-color:#eee;">数据接收</td>
+            <td :style="status.dq.down==0?'':'background-color:#c9302c;color:#ffffff;'">
+                <span :class="status.dq.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.dq.down==0?'color:#5cb85c;':'color:#c9302c;'"></span> 
+                {{status.dq.down==0?'正常':'异常'}}
+            </td>
+            <td :style="status.cdq.down==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.cdq.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cdq.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cdq.down==0?'正常':'异常'}}</td>
+            <td :style="status.cft.down==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.cft.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cft.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cft.down==0?'正常':'异常'}}</td>
+            <td :style="status.nwp.down==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.nwp.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.nwp.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.nwp.down==0?'正常':'异常'}}</td>
+            <td :style="status.fj.down==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.fj.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.fj.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.fj.down==0?'正常':'异常'}}</td>
+            <td :style="status.jx.down==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.jx.down==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.jx.down==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.jx.down==0?'正常':'异常'}}</td>
             <td style="background-color:#eee;border-left:solid 4px #ccc;">日前</td>
-            <td><span :class="status.rq==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.rq==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.rq==0?'正常':'异常'}}</td>
+            <td :style="status.rq==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.rq==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.rq==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.rq==0?'正常':'异常'}}</td>
             <td style="background-color:#eee;border-left:solid 4px #ccc;">后台</td>
-            <td><span :class="status.txht==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.txht==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.txht==0?'正常':'异常'}}</td>
+            <td :style="status.txht==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.txht==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.txht==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.txht==0?'正常':'异常'}}</td>
         </tr>
         <tr>
-            <td style="background-color:#eee;" >数据上送</td>
-            <td><span :class="status.dq.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.dq.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.dq.up==0?'正常':'异常'}}</td>
-            <td><span :class="status.cdq.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cdq.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cdq.up==0?'正常':'异常'}}</td>
-            <td><span :class="status.cft.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cft.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cft.up==0?'正常':'异常'}}</td>
-            <td><span :class="status.nwp.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.nwp.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.nwp.up==0?'正常':'异常'}}</td>
-            <td><span :class="status.fj.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.fj.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.fj.up==0?'正常':'异常'}}</td>
-            <td><span :class="status.jx.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.jx.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.jx.up==0?'正常':'异常'}}</td>
+            <td style="background-color:#eee;">数据上送</td>
+            <td :style="status.dq.up==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.dq.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.dq.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.dq.up==0?'正常':'异常'}}</td>
+            <td :style="status.cdq.up==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.cdq.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cdq.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cdq.up==0?'正常':'异常'}}</td>
+            <td :style="status.cft.up==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.cft.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.cft.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.cft.up==0?'正常':'异常'}}</td>
+            <td :style="status.nwp.up==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.nwp.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.nwp.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.nwp.up==0?'正常':'异常'}}</td>
+            <td :style="status.fj.up==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.fj.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.fj.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.fj.up==0?'正常':'异常'}}</td>
+            <td :style="status.jx.up==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.jx.up==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.jx.up==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.jx.up==0?'正常':'异常'}}</td>
             <td style="background-color:#eee;border-left:solid 4px #ccc;">日内</td>
-            <td><span :class="status.rn==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.rn==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.rn==0?'正常':'异常'}}</td>
+            <td :style="status.rn==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.rn==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.rn==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.rn==0?'正常':'异常'}}</td>
             <td style="background-color:#eee;border-left:solid 4px #ccc;">调度</td>
-            <td><span :class="status.txdd==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.txdd==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.txdd==0?'正常':'异常'}}</td>
+            <td :style="status.txdd==0?'':'background-color:#c9302c;color:#ffffff;'"><span :class="status.txdd==0?'glyphicon glyphicon-ok':'glyphicon glyphicon-remove'" :style="status.txdd==0?'color:#5cb85c;':'color:#c9302c;'"></span>{{status.txdd==0?'正常':'异常'}}</td>
         </tr>
     </table>
     <div class="container-fluid">
@@ -84,9 +79,9 @@
             <span class="btn btn-default col-sm-1" onclick="before()">前一天</span>
             <div class="col-sm-3">
                 <div class="input-group date" id="datetimepicker" data-date-format="yyyy-mm-dd">
-                    <input type='text' class="form-control" />  
+                    <input type='text' class="form-control" />
                     <span class="input-group-addon">  
-                        <span class="glyphicon glyphicon-calendar"></span>  
+                        <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
             </div>
@@ -98,7 +93,7 @@
         <div class="row" style="margin-top:20px;">
             <div id="chart" style="height:300px;"></div>
         </div>
-
+        <span class="btn btn-info" style="float:right;margin-bottom:5px;" onclick="exportExcel()">导出Excel</span>
         <div class="row" style="margin-top:20px;">
             <table class="table" style="font-size:12px;">
                 <tr>
@@ -106,22 +101,22 @@
                     <td>00分钟(日前/日内)</td>
                     <td>15分钟(日前/日内)</td>
                     <td>30分钟(日前/日内)</td>
-                    <td>45分钟(日前/日内)</td> 
+                    <td>45分钟(日前/日内)</td>
                 </tr>
                 <tr v-for="(file,index) in jhList">
                     <td>{{file.hour}}</td>
                     <td>{{file.zero}}</td>
                     <td>{{file.fifteen}}</td>
                     <td>{{file.thirty}}</td>
-                    <td>{{file.fortyfive}}</td> 
-                </tr>  
+                    <td>{{file.fortyfive}}</td>
+                </tr>
             </table>
         </div>
     </div>
 </div>
 
 <script>
-    var vue = net.datachange("divAll"); 
+    var vue = net.datachange("divAll");
 
     var myChart;
     // 指定图表的配置项和数据
@@ -129,9 +124,9 @@
         title: {
             text: '发电计划下发'
         },
-        tooltip: {trigger: 'axis'},
+        tooltip: { trigger: 'axis' },
         legend: {
-            data:['日前计划','日内计划']
+            data: ['日前计划', '日内计划']
         },
         xAxis: {
             boundaryGap: false,
@@ -144,69 +139,82 @@
             name: '日前计划',
             type: 'line',
             data: []
-        },{
+        }, {
             name: '日内计划',
             type: 'line',
             data: []
         }]
     };
-    
-    function getXAxisData(){
+
+    function getXAxisData() {
         var res = [];
-        for(var i=0;i<24;i++){
-            for(j=0;j<4;j++){
-                var column = (i>9?(i+""):('0'+i))+" "+(j==0?"00":(j*15));
+        for (var i = 0; i < 24; i++) {
+            for (j = 0; j < 4; j++) {
+                var column = (i > 9 ? (i + "") : ('0' + i)) + ":" + (j == 0 ? "00" : (j * 15));
                 res.push(column);
             }
         }
         return res;
     }
 
-    function before(){
-        var date = $('#datetimepicker input').val().replace(/-/g,"/");
-        var time = new Date(new Date(date).getTime() - 24*60*60*1000);
+    function before() {
+        var date = $('#datetimepicker input').val().replace(/-/g, "/");
+        var time = new Date(new Date(date).getTime() - 24 * 60 * 60 * 1000);
         $('#datetimepicker input').val(time.pattern("yyyy-MM-dd"));
     }
 
-    function after(){
-        var date = $('#datetimepicker input').val().replace(/-/g,"/");
-        var time = new Date(new Date(date).getTime() + 24*60*60*1000);
+    function after() {
+        var date = $('#datetimepicker input').val().replace(/-/g, "/");
+        var time = new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000);
         $('#datetimepicker input').val(time.pattern("yyyy-MM-dd"));
     }
 
-    function search(){
-        net.call("getEchartsData",$('#datetimepicker input').val(),function(res){
-            option.series[0].data  = res.rq;
-            option.series[1].data  = res.rn;
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-        }); 
-    }
-
-    function logout(){
-        net.getView("logout","",function(){
-            document.location.href="/";
+    function exportExcel(){
+        net.call("exportExcel", $('#datetimepicker input').val(), function (res) {
+            document.location.href = res;
         });
     }
 
-    $(function(){ 
+    function search() {
+        net.call("getEchartsData", $('#datetimepicker input').val(), function (res) {
+            option.series[0].data = res.rq;
+            option.series[1].data = res.rn;
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        });
+    }
+
+    function logout() {
+        net.getView("logout", "", function () {
+            document.location.href = "/";
+        });
+    }
+
+    $(function () {
 
         $('#datetimepicker input').val(new Date().pattern("yyyy-MM-dd"));
         $('#datetimepicker').datetimepicker({
-            autoclose:true,
-            minView:2,
-            startView:2
-        }); 
+            autoclose: true,
+            minView: 2,
+            startView: 2
+        });
 
-        
-        myChart = echarts.init(document.getElementById('chart')); 
+
+        myChart = echarts.init(document.getElementById('chart'));
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
         search();
-        
-    }); 
-</script>   
+
+        net.call("getFileStatus");
+
+        setInterval(function(){
+            net.call("getFileStatus");
+        },5*60*1000);
+
+    });
+
+</script>
 
 <style>
- 
+
 </style>

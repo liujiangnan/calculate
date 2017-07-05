@@ -24,6 +24,7 @@
     "lifekit-mysqlhelper": "^1.0.1",
     "node-schedule": "^1.2.3",
     "node-uuid": "^1.4.8",
+    "node-xlsx": "^0.7.4",
     "path": "^0.12.7",
     "socket.io": "^1.7.3",
     "socketio-jwt": "^4.5.0"
