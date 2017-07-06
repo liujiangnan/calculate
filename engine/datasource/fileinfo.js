@@ -171,7 +171,7 @@ emitter.on("file_listener",function(file_type,trans_type,status_){
     sockets = netclient.getSockets("yxjk").values(); 
     for(let i=0;i<sockets.length;i++){
         let net = sockets[i].net; 
-        if(file_type=="RQ"||file_type=="RN"||file_type=="TXDD"||file_type=="TXHT"){
+        if(file_type=="TXDD"||file_type=="TXHT"){
             net.data.status[file_type.toLowerCase()] = status_;
         }else{
             //net.data.status[file_type.toLowerCase()][trans_type] = status_;
@@ -227,6 +227,11 @@ emitter.on("general_file_log",function(file){
             }
 
         } 
+        fs.rename(sysconfig.filepath+'/'+file,sysconfig.backup+'/'+file,function(err){
+            if(err){
+                console.error(err);
+            } 
+        });
     });
 });
  
@@ -269,7 +274,7 @@ emitter.on("save_file_log",function(file){
             if(trans_type==="R"){  //接收文件
                 sql = sql+";"+ sqlparser.insertColumnForJson("FILE_LOG",insertObj);
             }else{ //S的话是上传文件
-                sql = sql+"; update FILE_LOG set dispatch_file_time='"+rowArr[0]+"' where filename='"+file_name+"'";
+                sql = sql+"; update FILE_LOG set dispatch_file_time='"+rowArr[0]+"',trans_type='S',desc_='"+rowInfoArr[4].trim()+"' where filename='"+file_name+"'";
             } 
             
 

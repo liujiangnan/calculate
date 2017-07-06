@@ -21,14 +21,17 @@ function service(net){
         let hour = time.substr(8,2)-0;
         let mi = time.substr(10,2); 
         let sql = sqlparser.queryWithWhere("FILE_LOG","filetime like '"+ymd+"%' and file_type='"+file_type+"' and trans_type='"+flag+"'");  
+        //console.dir(sql);
         conn.execDataSet(sql,function(error,rows){ 
-            if(hour>8&&rows.length==0){
+            //console.dir(rows.length);
+            if(hour>8&&rows.length==0){ 
                 if(flag=='R'){
                     net.data.status[file_type.toLowerCase()].down = 1;
                 }else{
                     net.data.status[file_type.toLowerCase()].up = 1;
                 }
-            }else{
+            }else{  
+                
                 if(flag=='R'){
                     net.data.status[file_type.toLowerCase()].down = 0;
                 }else{
@@ -70,7 +73,7 @@ function service(net){
                 if(flag=='R'){
                     net.data.status[file_type.toLowerCase()].down = 0;
                 }else{
-                    net.data.status[file_type.toLowerCase()].up = 0;
+                    net.data.status[file_type.toLowerCase()].up = 0; 
                 }
             }
         });
@@ -130,7 +133,7 @@ function service(net){
         });
     }
  
-    this.getFileStatus = function(callback){ 
+    this.getFileStatus = function(){ 
         dayStatus('DQ','R'); //日数据接收规则，八点之后还没上送算异常
         dayStatus('DQ','S'); //日数据上送规则，八点之后还没上送算异常
         dayStatus('NWP','R'); //日数据接收规则，八点之后还没上送算异常
@@ -144,7 +147,7 @@ function service(net){
         fiveStatus('CFT','R');//5分钟据接收规则，向前推20分钟，看有没有这个区间的文件上来
         fiveStatus('CFT','S');//5分钟据接收规则，向前推20分钟，看有没有这个区间的文件上来
         fiveStatus('FJ','R');//5分钟据接收规则，向前推20分钟，看有没有这个区间的文件上来
-        fiveStatus('FJ','S');//5分钟据接收规则，向前推20分钟，看有没有这个区间的文件上来
+        fiveStatus('FJ','S');//5分钟据接收规则，向前推20分钟，看有没有这个区间的文件上来 
 
     };
 
@@ -155,6 +158,7 @@ function service(net){
     this.getEchartsData = function(data,callback){
         let sql = sqlparser.queryWithWhere("file_log",
         "get_file_time like '"+data+"%' and file_type in ('DQ','CDQ','CFT','FJ','NWP','JX') order by filetime asc"); 
+        
         conn.execDataSet(sql,function(error,rows){ 
             if(error){
                 console.error(error);
@@ -183,8 +187,17 @@ function service(net){
 
     this.tablechange = function(data){
         let filetype = data.file_type;
+        let date = data.date;
+        if(filetype=="DQ"||filetype==="NWP"||filetype==="JX"){ //日期加一天
+            date = date.replace(/-/g,"/");
+            date = new Date(date);
+            date.addDays(1);
+            date = date.pattern("yyyyMMdd");
+        }else{
+            date = date.replace(/-/g,"");
+        }
         let sql = sqlparser.queryWithWhere("file_log",
-        "get_file_time like '"+data.date+"%' and file_type='"+filetype+"' order by filetime asc"); 
+        "filetime like '"+date+"%' and file_type='"+filetype+"' order by filetime asc");   
         conn.execDataSet(sql,function(error,rows){ 
             if(error){
                 console.error(error);

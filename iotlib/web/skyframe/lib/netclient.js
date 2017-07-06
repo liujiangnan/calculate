@@ -99,24 +99,27 @@ var NetClient = function (host, server, token, callback) {
 			}).emit('authenticate', { token: token }); //send the jwt 
 		}else{
 			//初始化对应模块的socket服务
-			socket.on('dataline', function (data, netKey) {
-					net_push_flag = true;
-					var copy = data;
-					if (netKey.indexOf(".") >= 0) {
-						var netKeyArr = netKey.split(".");
-						var chengeVal = proxy[netKeyArr[0]];
-						for (var i = 1; i < netKeyArr.length - 1; i++) {
-							chengeVal = chengeVal[netKeyArr[i]];
-						}
-						chengeVal[netKeyArr[netKeyArr.length - 1]] = data;
-					} else {
-						proxy[netKey] = data[netKey];
-						//copy = copyData(data);
+			socket.on('dataline', function (data, netKey) { 
+				net_push_flag = true;
+				var copy = data;
+				if (netKey.indexOf(".") >= 0) {
+					var netKeyArr = netKey.split(".");
+					var chengeVal = proxy[netKeyArr[0]];
+					var dataVal = data[netKeyArr[0]];
+					for (var i = 1; i < netKeyArr.length - 1; i++) {
+						chengeVal = chengeVal[netKeyArr[i]];
+						dataVal = dataVal[netKeyArr[i]];
 					}
-					//for(var key in listener){
-					//	listener[key](copy);
-					//}
-					net_push_flag = false;
+					chengeVal[netKeyArr[netKeyArr.length - 1]] = dataVal[netKeyArr[netKeyArr.length - 1]];
+				} else {
+					proxy[netKey] = data[netKey];
+					//copy = copyData(data);
+				}
+				//for(var key in listener){
+				//	listener[key](copy);
+				//}
+
+				net_push_flag = false;
 			});
 			socket.emit("initserver", server, function (sid) { 
 				socketid = sid;

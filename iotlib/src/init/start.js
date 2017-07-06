@@ -38,7 +38,7 @@ function start() {
     // middlewares
     app.use(bodyparser);
     app.use(json());
-    app.use(logger());
+    //app.use(logger());
     
     app.use(async (ctx,next)=>{
         if(ctx.path==="/favicon.ico"){ 

@@ -28,17 +28,30 @@ function service(net){
         let ymd = time.substr(0,8);
         let hour = time.substr(8,2)-0;
         let mi = time.substr(10,2); 
-        let sql = sqlparser.queryWithWhere("FILE_LOG","filetime like '"+ymd+"%' and file_type='"+file_type+"' and trans_type='"+flag+"'");  
+
+        let sql = sqlparser.queryWithWhere("FILE_LOG","filetime like '"+ymd+"%' and file_type='"+file_type+"'");  
+        if(flag=='S'){
+            sql = sqlparser.queryWithWhere("FILE_LOG","filetime like '"+ymd+"%' and file_type='"+file_type+"' and trans_type='S'");  
+        }
+        
         conn.execDataSet(sql,function(error,rows){ 
             if(hour>8&&rows.length==0){
                 if(flag=='R'){
-                    net.data.status[file_type.toLowerCase()].down = 1;
+                    if(file_type=='RQ'){
+                        net.data.status.rq = 1;
+                    }else{
+                        net.data.status[file_type.toLowerCase()].down = 1;
+                    } 
                 }else{
                     net.data.status[file_type.toLowerCase()].up = 1;
                 }
             }else{
-                if(flag=='R'){
-                    net.data.status[file_type.toLowerCase()].down = 0;
+                if(flag=='R'){ 
+                    if(file_type=='RQ'){
+                        net.data.status.rq = 0;
+                    }else{
+                        net.data.status[file_type.toLowerCase()].down = 0;
+                    } 
                 }else{
                     net.data.status[file_type.toLowerCase()].up = 0;
                 }
@@ -56,7 +69,10 @@ function service(net){
         let end = new Date().pattern("yyyyMMddHHmmss");
         let end_h = end.substr(8,2);
         let end_m = end.substr(10,2);
-        let where = " file_type='"+file_type+"' and trans_type='"+flag+"' ";
+        let where = " file_type='"+file_type+"' ";
+        if(flag=='S'){
+             where = where+" and trans_type='"+flag+"' "
+        }
         if((start_m-0)>0&&(start_m-0)<=15){
             where = where + " and ( filetime='"+ymd+"_"+start_h+"15' or filetime='"+ymd+"_"+start_h+"30')";
         }else if((start_m-0)>15&&(start_m-0)<=30){
@@ -70,13 +86,21 @@ function service(net){
         conn.execDataSet(sql,function(error,rows){ 
             if(rows.length==0){
                 if(flag=='R'){
-                    net.data.status[file_type.toLowerCase()].down = 1;
+                    if(file_type=='RN'){
+                        net.data.status.rn = 1;
+                    }else{
+                        net.data.status[file_type.toLowerCase()].down = 1;
+                    }  
                 }else{
                     net.data.status[file_type.toLowerCase()].up = 1;
                 }
             }else{
                 if(flag=='R'){
-                    net.data.status[file_type.toLowerCase()].down = 0;
+                    if(file_type=='RN'){
+                        net.data.status.rn = 0;
+                    }else{
+                        net.data.status[file_type.toLowerCase()].down = 0;
+                    }  
                 }else{
                     net.data.status[file_type.toLowerCase()].up = 0;
                 }
@@ -145,9 +169,11 @@ function service(net){
         dayStatus('NWP','S'); //日数据上送规则，八点之后还没上送算异常
         dayStatus('JX','R'); //日数据接收规则，八点之后还没上送算异常
         dayStatus('JX','S'); //日数据上送规则，八点之后还没上送算异常
+        dayStatus('RQ','R'); //日数据上送规则，八点之后还没上送算异常
 
         fifteenStatus('CDQ','R'); //15分钟据接收规则，向前推半个小时，看有没有这个区间的文件上来
         fifteenStatus('CDQ','S'); //15分钟据接收规则，向前推半个小时，看有没有这个区间的文件上来
+        fifteenStatus('RN','R'); //15分钟据接收规则，向前推半个小时，看有没有这个区间的文件上来
 
         fiveStatus('CFT','R');//5分钟据接收规则，向前推20分钟，看有没有这个区间的文件上来
         fiveStatus('CFT','S');//5分钟据接收规则，向前推20分钟，看有没有这个区间的文件上来
