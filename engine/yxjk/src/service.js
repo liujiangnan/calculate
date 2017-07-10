@@ -23,10 +23,12 @@ function service(net){
 
     function dayStatus(file_type,flag){
         let time = new Date();
-        time.addDays(1);
+        let hour = time.getHours();
+        if(hour>=8){
+            time.addDays(1);
+        }  
         time = time.pattern("yyyyMMddHHmmss");
-        let ymd = time.substr(0,8);
-        let hour = time.substr(8,2)-0;
+        let ymd = time.substr(0,8); 
         let mi = time.substr(10,2); 
 
         let sql = sqlparser.queryWithWhere("FILE_LOG","filetime like '"+ymd+"%' and file_type='"+file_type+"'");  
@@ -35,7 +37,7 @@ function service(net){
         }
         
         conn.execDataSet(sql,function(error,rows){ 
-            if(hour>8&&rows.length==0){
+            if(rows.length==0){
                 if(flag=='R'){
                     if(file_type=='RQ'){
                         net.data.status.rq = 1;
@@ -117,8 +119,11 @@ function service(net){
         let start_m = start.substr(10,2); 
         let end = new Date().pattern("yyyyMMddHHmmss");
         let end_h = end.substr(8,2);
-        let end_m = end.substr(10,2);
-        let where = " file_type='"+file_type+"' and trans_type='"+flag+"' ";
+        let end_m = end.substr(10,2); 
+        let where = " file_type='"+file_type+"' ";
+        if(flag=='S'){
+             where = where+" and trans_type='"+flag+"' "
+        }
         if((start_m-0)>0&&(start_m-0)<=5){
             where = where + " and ( filetime='"+ymd+"_"+start_h+"05' or filetime='"+ymd+"_"+start_h+"10' or filetime='"+ymd+"_"+start_h+"15' or filetime='"+ymd+"_"+start_h+"20')";
         }else if((start_m-0)>5&&(start_m-0)<=10){

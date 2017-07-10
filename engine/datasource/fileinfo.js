@@ -260,6 +260,9 @@ emitter.on("save_file_log",function(file){
             insertObj.code = rowInfoArr[1].trim();
             let file_name = rowInfoArr[2].trim();
             let file_name_arr = file_name.split("_");
+            if(file_name_arr.length!=4){
+                continue;
+            }
             insertObj.filetime = file_name_arr[1]+"_"+file_name_arr[2];
             insertObj.filename = file_name;
             let trans_type = rowInfoArr[0].trim();
@@ -288,18 +291,27 @@ emitter.on("save_file_log",function(file){
 
         }
         //sql = sqlparser.insertColumnForJson("PJ",insertObj);
-        conn.execNonQuery(sql.substr(1),function(err,res){
-            if(err){
-                console.error(err);
-                return;
-            }
-            console.log("保存成功");
+        if(sql){
+            conn.execNonQuery(sql.substr(1),function(err,res){
+                if(err){
+                    console.error(err);
+                    return;
+                }
+                console.log("保存成功");
+                fs.rename(sysconfig.filepath+'/'+file,sysconfig.backup+'/'+file,function(err){
+                    if(err){
+                        console.error(err);
+                    } 
+                });
+            }) 
+        }else{
             fs.rename(sysconfig.filepath+'/'+file,sysconfig.backup+'/'+file,function(err){
                 if(err){
                     console.error(err);
                 } 
             });
-        }) 
+        }
+        
     });
 });
 

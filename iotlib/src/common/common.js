@@ -46,7 +46,7 @@ Date.prototype.pattern=function(fmt) {
 
 Date.prototype.addMinutes = function(minutes)
 {
-    this.setDate(this.getMinutes() + minutes);
+    this.setMinutes(this.getMinutes() + minutes);
 };
 
 
@@ -152,3 +152,8 @@ Array.prototype.asynEach = function(func, callback){
         callback(_this);
     }
 };
+
+let start = new Date()
+start.addMinutes(-30);
+start = start.pattern("yyyyMMddHHmmss");
+console.dir(start);
