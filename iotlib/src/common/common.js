@@ -152,8 +152,3 @@ Array.prototype.asynEach = function(func, callback){
         callback(_this);
     }
 };
-
-let start = new Date()
-start.addMinutes(-30);
-start = start.pattern("yyyyMMddHHmmss");
-console.dir(start);
