@@ -166,9 +166,9 @@ function service(net){
     net.data.fileList = [];  
 
     this.getEchartsData = function(data,callback){
-        let sql = sqlparser.queryWithWhere("file_log",
-        "get_file_time like '"+data+"%' and file_type in ('DQ','CDQ','CFT','FJ','NWP','JX') order by filetime asc"); 
-        
+        let sql = "select DISTINCT(f.filename),f.`code`,f.desc_,f.dispatch_file_time,f.file_type,f.filetime,f.get_file_time,f.id,f.status_,f.trans_type from FILE_LOG f"
+        + " where f.get_file_time like '"+data+"%' and f.file_type in ('DQ','CDQ','CFT','FJ','NWP','JX') order by f.filetime asc"
+
         conn.execDataSet(sql,function(error,rows){ 
             if(error){
                 console.error(error);
@@ -205,9 +205,10 @@ function service(net){
             date = date.pattern("yyyyMMdd");
         }else{
             date = date.replace(/-/g,"");
-        }
-        let sql = sqlparser.queryWithWhere("file_log",
-        "filetime like '"+date+"%' and file_type='"+filetype+"' order by filetime asc");   
+        } 
+        let sql = "select DISTINCT(f.filename),f.`code`,f.desc_,f.dispatch_file_time,f.file_type,f.filetime,f.get_file_time,f.id,f.status_,f.trans_type from FILE_LOG f"
+        + " where f.filetime like '"+data+"%' and f.file_type='"+filetype+"' order by f.filetime asc"
+
         conn.execDataSet(sql,function(error,rows){ 
             if(error){
                 console.error(error);

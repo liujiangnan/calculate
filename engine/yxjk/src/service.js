@@ -17,8 +17,8 @@ function service(net){
         jx:{down:0,up:0},
         rq:0,
         rn:0,
-        txht:0,
-        txdd:0
+        txht:1,
+        txdd:1
     };
 
     function dayStatus(file_type,flag){
