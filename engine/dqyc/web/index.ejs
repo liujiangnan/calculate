@@ -1,0 +1,115 @@
+<link href="cszt/web/static/timer/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />  
+
+<script type="text/javascript" src="cszt/web/static/echarts.min.js"></script>   
+<script src="cszt/web/static/timer/js/bootstrap-datetimepicker.min.js"></script> 
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <img src="login/web/static/image/logo1.jpg" style="height:50px;" alt=""> 
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a id="yxjk" href="/yxjk">运行监控</a></li>
+        <li><a id="zbpj" href="/zbpj">指标评价</a></li>
+        <li><a id="cszt" href="/cszt">传输状态</a></li>
+        <li class="active"><a>短期预测</a></li>
+      </ul>
+       
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav> 
+<div style="padding-left:5px;padding-right:5px;"> 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <span class="btn btn-default col-sm-1" onclick="before()">前一天</span>
+            <div class="col-sm-3">
+                <div class="input-group date" >
+                    <input type='text' id="datetimepicker" data-date-format="yyyy-mm-dd" class="form-control"/>  
+                    <span class="input-group-addon">  
+                        <span class="glyphicon glyphicon-calendar"></span>  
+                    </span>
+                </div>
+            </div>
+            <span class="btn btn-default col-sm-1" onclick="after()">后一天</span>
+            <div class="col-sm-1"></div>
+            <span class="btn btn-info col-sm-2" onclick="search()">查询</span>
+            <div class="col-sm-2"></div>
+        </div>  
+        <div class="row" style="margin-top:20px;">
+            <div>
+                <h4 id="wjlb_title">数据文件传输记录</h4>
+            </div>
+            <table class="table" style="font-size:12px;">
+                <tr>
+                    <td></td>
+                    <td>电厂名称</td>
+                    <td>短期预测上报率</td>
+                    <td>短期预测准确率</td>
+                    <td>短期预测合格率</td>
+                    <td>超短期预测上报率</td>
+                    <td>超短期预测准确率</td>
+                    <td>超短期预测合格率</td>
+                </tr>
+                <tr v-for="(file,index) in fileList">
+                    <td>{{index+1}}</td>
+                    <td>{{file.name}}</td>
+                    <td>{{file.da_flag}}</td>
+                    <td>{{file.da_zq}}</td>
+                    <td>{{file.da_hg}}</td>
+                    <td>{{file.di_sb}}</td>
+                    <td>{{file.di_zq}}</td>
+                    <td>{{file.di_hg}}</td>
+                </tr>  
+            </table>
+        </div>
+    </div>
+ </div> 
+<script>
+    var vue = net.datachange("divAll");
+ 
+    function before(){
+        var date = $('#datetimepicker').val().replace(/-/g,"/");
+        var time = new Date(new Date(date).getTime() - 24*60*60*1000);
+        $('#datetimepicker').val(time.pattern("yyyy-MM-dd"));
+    }
+
+    function after(){
+        var date = $('#datetimepicker').val().replace(/-/g,"/");
+        var time = new Date(new Date(date).getTime() + 24*60*60*1000);
+        $('#datetimepicker').val(time.pattern("yyyy-MM-dd"));
+    }
+
+    function round(a,total){
+       return Math.round(((a-0)/total)*100)/100;
+    }
+ 
+    function logout(){
+        net.getView("logout","",function(){
+            document.location.href="/";
+        });
+    }
+
+    function search(){
+        net.call("tablechange",{date:$('#datetimepicker').val()}); 
+    }
+
+    $(function(){ 
+ 
+        $('#datetimepicker').val(new Date().pattern("yyyy-MM-dd"));
+        $('#datetimepicker').datetimepicker({
+            autoclose:true, 
+            minView:2,
+            startView:2
+        });   
+        search();
+    }); 
+</script>   
+
+<style>
+ 
+</style>

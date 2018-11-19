@@ -106,6 +106,57 @@ emitter.on("save_rq_plan",function(file){
     });
 });
 
+
+//导入日内计划数据
+emitter.on("save_kh",function(file){
+    let sql = "";
+    let fileArr = file.split("_");
+    let file_time = fileArr[1]+fileArr[2];
+    fs.readFile(sysconfig.filepath+'/'+file, function (err, data) {
+        if(err) {
+            console.error(err);
+            return;
+        } 
+        var strArr = iconv.decode(data, 'gb2312').split("\n"); 
+        let plan_time = "";
+        for(let i=0;i<strArr.length;i++){
+            let temp = strArr[i];
+            if(temp.indexOf("planDate")>0){
+                plan_time = temp.substr(temp.indexOf("'")+1,8);
+            }
+            if(temp.indexOf("#")>=0){
+                let tempSpl = temp.split(/\s+/);
+                let insertObj = {
+                    name:tempSpl[1],
+                    da_flag:tempSpl[2],
+                    da_zq:tempSpl[3],
+                    da_hg:tempSpl[4],
+                    di_sb:tempSpl[5],
+                    di_zq:tempSpl[6],
+                    di_hg:tempSpl[7], 
+                    plan_date:plan_time,
+                    file_time:file_time
+                }
+                sql = sql + ";" + sqlparser.insertColumnForJson("KH",insertObj);
+            }
+        }
+        console.log(sql);
+        conn.execNonQuery(sql.substr(1),function(err,res){
+            if(err){
+                console.error(err);
+                return;
+            }
+            console.log("保存成功");
+            fs.rename(sysconfig.filepath+'/'+file,sysconfig.backup+'/'+file,function(err){
+                if(err){
+                    console.error(err);
+                } 
+            });
+        }) 
+    });
+});
+
+
 emitter.on("save_pj",function(file){
     let sql = "";
     let fileArr = file.split("_");
@@ -335,7 +386,7 @@ emitter.on('timerun', function() {
         } else {  
             for(let i=0;i<files.length;i++){
                 let file = files[i];
-                if(file.indexOf("_RN")>0||file.indexOf("_RQ")>0||file.indexOf("_PJ")>0){
+                if(file.indexOf("_RN")>0||file.indexOf("_RQ")>0||file.indexOf("_PJ")>0||file.indexOf("_KH")>0){
                     let arr = file.split("_");
                     let file_type = arr[3].split(".")[0];
                     if(file_type==="RN"){ //处理日内数据导入
@@ -346,6 +397,9 @@ emitter.on('timerun', function() {
                     }
                     if(file_type==="PJ"){ //评价
                         emitter.emit("save_pj",file);
+                    }
+                    if(file_type==="KH"){ //功率预测三率
+                        emitter.emit("save_kh",file);
                     }
                 }else if(file.indexOf("FileTrans")===0){  //文件上传日志解析与保存
                     let arr = file.split("_");
